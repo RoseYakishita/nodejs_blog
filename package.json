@@ -16,15 +16,19 @@
   "license": "ISC",
   "author": "Rose",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --inspect ./index.js",
+    "start": "nodemon --inspect ./src/index.js",
+    "watch": "sass --watch src/resources/scss/app.scss src/public/css/app.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-handlebars": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "morgan": "^1.11.0",
+    "nodemon": "^3.1.14",
+    "sass": "^1.101.0"
   }
 }
