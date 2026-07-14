@@ -5,7 +5,12 @@ const { engine } = require('express-handlebars');
 const path = require('path');
 const app = express();
 const port = 3000;
+
+const route = require('./routes/');
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // View Engine
 app.engine(
   'hbs',
@@ -21,12 +26,7 @@ app.set('views', path.join(__dirname, './resources/views'));
 app.use(morgan('combined'));
 
 // Route
-app.get('/', (req, res) => {
-  res.render('home');
-});
-app.get('/about', (req, res) => {
-  res.render('about');
-});
+route(app);
 
 // Server
 app.listen(port, () => {
