@@ -19,11 +19,7 @@ app.engine(
   }),
 );
 
-app.set(
-  'view engine',
-
-  'hbs',
-);
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, './resources/views'));
 
 // Middleware
