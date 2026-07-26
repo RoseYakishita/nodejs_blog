@@ -18,6 +18,7 @@
   "type": "commonjs",
   "main": "src/index.js",
   "scripts": {
+    "Beautify": "lint-staged",
     "start": "nodemon --inspect ./src/index.js",
     "watch": "sass --watch src/resources/scss/app.scss src/public/css/app.css",
     "test": "echo \"Error: no test specified\" && exit 1"
