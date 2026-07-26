@@ -1,13 +1,18 @@
 const express = require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
+const connectDB = require('./config/db');
+require('dotenv').config();
 
 const path = require('path');
 const app = express();
 const port = 3000;
 
 const route = require('./routes/');
+//connect to DB
+connectDB();
 
+// Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
