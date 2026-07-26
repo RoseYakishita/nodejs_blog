@@ -23,7 +23,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "*.{js,scss,json}": [
+    "src/**/*.{js,scss,json}": [
       "prettier --single-quote --trailing-comma all --write"
     ]
   },
