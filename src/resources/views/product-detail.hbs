@@ -1,14 +1,12 @@
-<H1>Trang chủ</H1>
+<H1>Trang chi tieet</H1>
 
 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-    {{#each furnitures}}
       <div style="width: 300px; border: 1px solid #ddd; padding: 10px; border-radius: 8px;">
         <a href="/furniture/{{this.slug}}" style="text-decoration: underline;">
-          <h2>{{name}}</h2>
+          <h2>{{furniture.name}}</h2>
         </a >
-        <p>{{description}}</p>
+        <p>{{furniture.description}}</p>
         <!-- Giới hạn chiều rộng ảnh, tự động căn chỉnh tỷ lệ -->
-        <img src="{{images}}" alt="{{name}}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
+        <img src="{{furniture.images}}" alt="{{furniture.name}}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
       </div>
-    {{/each}}
 </div>

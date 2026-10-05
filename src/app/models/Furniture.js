@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const FurnitureSchema = new Schema({
   name: { type: String, maxLength: 255, required: true },
   description: { type: String, maxLength: 600, required: true },
-  image: { type: String, maxLength: 255, required: true },
+  images: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

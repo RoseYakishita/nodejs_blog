@@ -2,22 +2,14 @@
 const Furniture = require('../models/Furniture');
 
 class SiteController {
-  async index(req, res) {
+  async index(req, res, next) {
     try {
-      // Log ra để debug chắc chắn Furniture đã là Mongoose Model
-      // console.log(Furniture);
-
-      const furniture = await Furniture.find({});
-
-      // Nếu dùng API:
-      return res.json(furniture);
-
-      // Nếu dùng Handlebars/Views để render giao diện:
-      // return res.render('home', { furniture });
-    } catch (err) {
-      console.error('Lỗi DB:', err);
-      return res.status(500).json({ error: 'Lỗi khi truy vấn cơ sở dữ liệu' });
+      const data = await Furniture.find({}).lean();
+      res.render('Home', { furnitures: data });
+    } catch (error) {
+      next(error);
     }
+    // res.render('Home');
   }
 
   search(req, res) {
