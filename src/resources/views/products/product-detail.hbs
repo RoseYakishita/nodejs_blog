@@ -1,0 +1,88 @@
+<div class="space-y-6 max-w-5xl mx-auto">
+  <!-- Navigation / Breadcrumb -->
+  <div class="flex items-center space-x-2 text-sm text-slate-500">
+    <a href="/products" class="hover:text-blue-600 flex items-center space-x-1 font-medium transition">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      <span>Quay lại Danh sách</span>
+    </a>
+    <span>/</span>
+    <span class="text-slate-800 dark:text-slate-200 font-medium truncate">{{product.name}}</span>
+  </div>
+
+  <!-- Product Detail Card -->
+  <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-8 shadow-sm">
+    <!-- Hình ảnh sản phẩm -->
+    <div class="aspect-square bg-slate-100 dark:bg-slate-700/50 rounded-xl overflow-hidden border border-slate-200/60 dark:border-slate-700">
+      <img src="{{product.images.[0]}}" alt="{{product.name}}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+    </div>
+
+    <!-- Thông tin chi tiết sản phẩm -->
+    <div class="flex flex-col justify-between space-y-6">
+      <div class="space-y-3">
+        <!-- Badge Danh mục & SKU Thu Nhỏ -->
+        {{!-- <div class="flex items-center space-x-2">
+          <span class="px-2.5 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-semibold">
+            {{product.category}}
+          </span>
+          <!-- SKU thu nhỏ tinh tế -->
+          <span class="text-[11px] font-mono font-medium text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-700/60 px-2 py-0.5 rounded border border-slate-200/50 dark:border-slate-600/50">
+            SKU: {{product.sku}}
+          </span>
+        </div> --}}
+
+        <!-- Tên sản phẩm -->
+        <h1 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white leading-tight">
+          {{product.name}}
+        </h1>
+
+        <!-- Giá bán -->
+        <div class="pt-1">
+          <span class="text-3xl font-extrabold text-slate-900 dark:text-white">
+            {{formatCurrency product.price}}
+          </span>
+        </div>
+
+        <!-- MÔ TẢ SẢN PHẨM -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-700/60">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Mô tả sản phẩm</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+            {{#if product.description}}
+              {{product.description}}
+            {{else}}
+              Chưa có thông tin mô tả chi tiết cho sản phẩm này.
+            {{/if}}
+          </p>
+        </div>
+      </div>
+
+      <!-- Thông tin kho hàng & Ngày tạo -->
+      <div class="space-y-3">
+        <div class="space-y-2 border-t border-b border-slate-100 dark:border-slate-700/60 py-3 text-sm">
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500">Tình trạng kho:</span>
+            <span class="font-semibold text-xs px-2.5 py-1 rounded-md {{#if (gt product.stock 0)}}bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400{{else}}bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400{{/if}}">
+              {{#if (gt product.stock 0)}}Còn hàng ({{product.stock}} sp){{else}}Hết hàng{{/if}}
+            </span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500">Ngày tạo:</span>
+            <span class="text-slate-700 dark:text-slate-300 font-medium text-xs">
+              {{formatDate product.createdAt}}
+            </span>
+          </div>
+        </div>
+
+        <!-- Các nút thao tác -->
+        <div class="flex space-x-3 pt-1">
+          <button onclick="editProduct('{{product.id}}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl transition flex items-center justify-center space-x-2 text-sm shadow-sm">
+            <i data-lucide="edit-3" class="w-4 h-4"></i>
+            <span>Chỉnh sửa sản phẩm</span>
+          </button>
+          <button onclick="deleteProduct('{{product.id}}')" class="px-4 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 dark:hover:bg-rose-900/40 text-rose-600 dark:text-rose-400 font-medium py-2.5 rounded-xl transition text-sm">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

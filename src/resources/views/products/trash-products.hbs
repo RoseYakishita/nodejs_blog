@@ -1,0 +1,130 @@
+<div class="space-y-6">
+    <!-- Header & Add Button -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold">Danh sách Sản phẩm</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">Quản lý sản phẩm đã xóa</p>
+        </div>
+        <button
+            class="flex items-center justify-center space-x-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-lg transition font-medium">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <a href="/products" class="text-white hover:text-white">Quay lại</a>
+        </button>
+    </div>
+
+    <!-- Products Table Container -->
+    <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead
+                    class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 text-xs uppercase font-semibold">
+                    <tr>
+                        <th class="p-4">#</th>
+                        <th class="p-4">Sản phẩm</th>
+                        {{!-- <th class="p-4">SKU</th>
+                        <th class="p-4">Danh mục</th> --}}
+                        <th class="p-4">Giá bán</th>
+                        <th class="p-4">Tồn kho</th>
+                        {{!-- <th class="p-4 text-right">Thao tác</th> --}}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-sm">
+                    {{#each products}}
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition">
+                        <td class="p-4">
+                            {{sum @index 1}}
+                        </td>
+                        <td class="p-4 flex items-center space-x-3">
+                            <img src="{{this.images.[0]}}" class="w-10 h-10 rounded-lg object-cover bg-slate-100">
+                            <span class="font-medium text-slate-800 dark:text-white">
+                                {{this.name}}
+                            </span>
+                            <a href="/product-detail/{{this.slug}}"
+                                class="text-xs text-slate-500 dark:text-slate-400 hover:underline">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                        <td class="p-4 font-semibold text-slate-800 dark:text-white">
+                            {{formatCurrency this.price}}
+                        </td>
+                        <td class="p-4">
+                            <span class="px-2 py-1 text-xs font-semibold rounded
+                {{#if (gt this.stock 0)}}
+                    bg-emerald-100 text-emerald-700
+                    dark:bg-emerald-900/30 dark:text-emerald-400
+                {{else}}
+                    bg-rose-100 text-rose-700
+                {{/if}}">
+                                {{this.stock}} sp
+                            </span>
+                        </td>
+                        <td class="p-4 text-right">
+                            <button type="button"
+                                class="restore-product-btn p-1.5 text-slate-500 hover:text-green-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+                                data-id="{{this._id}}" data-name="{{this.name}}" title="Khôi phục">
+                                <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                            </button>
+                            <button type="button"
+                                class="force-delete-product-btn p-1.5 text-slate-500 hover:text-red-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+                                data-id="{{this._id}}" data-name="{{this.name}}" title="Xóa vĩnh viễn">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td colspan="5" class="p-8 text-center text-slate-500 dark:text-slate-400">
+                            Không có sản phẩm nào trong thùng rác.
+                        </td>
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+            </table>
+            <div id="delete-product-modal"
+                class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+
+                <div class="w-full max-w-md bg-white dark:bg-slate-800 rounded-xl shadow-xl">
+
+                    <div class="flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-700">
+                        <h2 id="delete-modal-title" class="text-lg font-semibold text-slate-800 dark:text-white">
+                            Xác nhận xóa
+                        </h2>
+
+                        <button type="button" id="close-delete-modal"
+                            class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="p-5">
+                        <p class="text-slate-600 dark:text-slate-300">
+                            Bạn có chắc muốn xóa sản phẩm
+                            <strong id="delete-product-name" class="text-slate-900 dark:text-white"></strong>?
+                        </p>
+
+                        <p id="delete-modal-warning" class="mt-2 text-sm text-amber-500">
+                            Sản phẩm sẽ được chuyển vào thùng rác.
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end gap-3 p-5 border-t border-slate-200 dark:border-slate-700">
+
+                        <button type="button" id="cancel-delete"
+                            class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-medium transition">
+                            Hủy
+                        </button>
+
+                        <button type="button" id="confirm-delete"
+                            class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition">
+                            Xóa sản phẩm
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

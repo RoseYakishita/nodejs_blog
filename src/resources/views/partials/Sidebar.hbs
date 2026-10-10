@@ -1,0 +1,43 @@
+<aside id="sidebar" class="bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 w-64 min-h-screen flex flex-col transition-all duration-300 z-30">
+  <!-- Logo -->
+  <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-700">
+    <div class="flex items-center space-x-3">
+      <div class="p-2 bg-brand-600 rounded-lg text-white">
+        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+      </div>
+      <span class="font-bold text-lg text-slate-800 dark:text-white sidebar-text">ShopAdmin</span>
+    </div>
+    <button id="toggle-sidebar" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white">
+      <i data-lucide="chevron-left" class="w-5 h-5"></i>
+    </button>
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="flex-1 px-4 py-4 space-y-1">
+    <a href="/" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+      <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+      <span class="sidebar-text">Dashboard</span>
+    </a>
+    <a href="/products" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg font-medium bg-brand-50 dark:bg-brand-600/20 text-brand-600 dark:text-brand-500">
+      <i data-lucide="box" class="w-5 h-5"></i>
+      <span class="sidebar-text">Sản phẩm</span>
+    </a>
+    <a href="/orders" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+      <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+      <span class="sidebar-text">Đơn hàng</span>
+    </a>
+    <a href="/customers" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition">
+      <i data-lucide="users" class="w-5 h-5"></i>
+      <span class="sidebar-text">Khách hàng</span>
+    </a>
+  </nav>
+
+  <!-- User Footer -->
+  <div class="p-4 border-t border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="w-9 h-9 rounded-full object-cover">
+    <div class="sidebar-text overflow-hidden">
+      <p class="text-sm font-semibold truncate text-slate-800 dark:text-white">Admin User</p>
+      <p class="text-xs text-slate-500 truncate">admin@shop.com</p>
+    </div>
+  </div>
+</aside>

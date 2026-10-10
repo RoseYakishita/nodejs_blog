@@ -1,0 +1,114 @@
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-md max-w-4xl w-full border border-slate-100 mx-auto my-6">
+  <h2 class="text-2xl font-bold text-slate-800 text-center mb-6">Chỉnh sửa sản phẩm</h2>
+
+  <form action="/products/{{product._id}}?_method=PUT" method="POST" enctype="multipart/form-data" class="space-y-6">
+    
+    <!-- THÔNG TIN CƠ BẢN -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Tên sản phẩm -->
+      <div class="md:col-span-2">
+        <label for="name" class="block font-medium text-sm text-slate-700 mb-1">Tên sản phẩm <span class="text-rose-500">*</span></label>
+        <input type="text" id="name" value="{{product.name}}" name="name" maxlength="200" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập tên sản phẩm...">
+      </div>
+
+      <!-- Giá bán -->
+      <div>
+        <label for="price" class="block font-medium text-sm text-slate-700 mb-1">Giá bán (VNĐ) <span class="text-rose-500">*</span></label>
+        <input type="number" id="price" value="{{product.price}}" name="price" min="0" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="0">
+      </div>
+
+      <!-- Giá gốc -->
+      <div>
+        <label for="originalPrice" class="block font-medium text-sm text-slate-700 mb-1">Giá gốc / Chưa giảm (VNĐ)</label>
+        <input type="number" id="originalPrice" value="{{product.originalPrice}}" name="originalPrice" min="0" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="0">
+      </div>
+
+      <!-- Tồn kho -->
+      <div>
+        <label for="stock" class="block font-medium text-sm text-slate-700 mb-1">Số lượng tồn kho <span class="text-rose-500">*</span></label>
+        <input type="number" id="stock" value="{{product.stock}}" name="stock" min="0" required class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Trạng thái (Đã thêm xử lý selected theo product.status) -->
+      <div>
+        <label for="status" class="block font-medium text-sm text-slate-700 mb-1">Trạng thái kinh doanh</label>
+        <select id="status" name="status" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+          <option value="active" {{#if (eq product.status 'active')}}selected{{/if}}>Đang kinh doanh (Active)</option>
+          <option value="draft" {{#if (eq product.status 'draft')}}selected{{/if}}>Bản nháp (Draft)</option>
+          <option value="out_of_stock" {{#if (eq product.status 'out_of_stock')}}selected{{/if}}>Hết hàng (Out of stock)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- MÔ TẢ SẢN PHẨM -->
+    <div>
+      <label for="description" class="block font-medium text-sm text-slate-700 mb-1">Mô tả sản phẩm</label>
+      <textarea id="description" name="description" rows="3" class="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Mô tả chi tiết về sản phẩm...">{{product.description}}</textarea>
+    </div>
+
+    <!-- QUẢN LÝ HÌNH ẢNH (Render tự động toàn bộ mảng images) -->
+    <div class="border-t border-slate-200 pt-4">
+      <label class="block font-semibold text-slate-800 mb-2">Hình ảnh sản phẩm:</label>
+      
+      <div id="image-rows-container" class="space-y-3">
+        {{#if product.images.length}}
+          {{#each product.images}}
+          <div class="image-row p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col md:flex-row items-center gap-3">
+            <div class="flex-1 w-full">
+              <input type="text" value="{{this}}" name="urlImages" placeholder="Dán link ảnh (URL)..." class="w-full p-2 text-sm border rounded-md bg-white">
+            </div>
+            <span class="text-xs font-bold text-slate-400 uppercase">Hoặc</span>
+            <div class="flex-1 w-full">
+              <input type="file" name="fileImages" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+            </div>
+          </div>
+          {{/each}}
+        {{else}}
+          <!-- Mặc định 1 ô nếu sản phẩm chưa có ảnh -->
+          <div class="image-row p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col md:flex-row items-center gap-3">
+            <div class="flex-1 w-full">
+              <input type="text" name="urlImages" placeholder="Dán link ảnh (URL)..." class="w-full p-2 text-sm border rounded-md bg-white">
+            </div>
+            <span class="text-xs font-bold text-slate-400 uppercase">Hoặc</span>
+            <div class="flex-1 w-full">
+              <input type="file" name="fileImages" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+            </div>
+          </div>
+        {{/if}}
+      </div>
+
+      <button type="button" onclick="addImageRow()" class="mt-3 text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-md font-medium text-slate-700 transition">
+        + Thêm ô nhập ảnh
+      </button>
+    </div>
+
+    <!-- NÚT HÀNH ĐỘNG -->
+    <div class="pt-4 flex gap-3 border-t border-slate-200">
+      <a href="/products" class="flex-1 text-center bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 rounded-lg transition">
+        Hủy
+      </a>
+      <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition">
+        Lưu thay đổi
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- SCRIPT THÊM DÒNG ẢNH -->
+<script>
+  function addImageRow() {
+    const container = document.getElementById('image-rows-container');
+    const newRow = document.createElement('div');
+    newRow.className = 'image-row p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col md:flex-row items-center gap-3';
+    newRow.innerHTML = `
+      <div class="flex-1 w-full">
+        <input type="text" name="urlImages" placeholder="Dán link ảnh (URL)..." class="w-full p-2 text-sm border rounded-md bg-white">
+      </div>
+      <span class="text-xs font-bold text-slate-400 uppercase">Hoặc</span>
+      <div class="flex-1 w-full">
+        <input type="file" name="fileImages" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+      </div>
+    `;
+    container.appendChild(newRow);
+  }
+</script>

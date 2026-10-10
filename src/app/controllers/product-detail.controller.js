@@ -1,18 +1,18 @@
-// 1. Kiểm tra kĩ đường dẫn tới file Furniture.js
-const Furniture = require('../models/Furniture');
+const Products = require('../models/Products');
 
 class ProductDetailController {
   show(req, res) {
-    Furniture.findOne({ slug: req.params.slug })
-      .then((furniture) => {
-        if (!furniture) {
-          return res.status(404).send('Furniture not found');
+    const slug = req.params.slug;
+    Products.findOne({ slug: slug })
+      .lean()
+      .then((product) => {
+        if (!product) {
+          return res.status(404).send('Product not found');
         }
-        res.render('product-detail', { furniture: furniture.toObject() });
+        res.render('products/product-detail', { product: product });
       })
       .catch((error) => {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send(error);
       });
   }
 }
